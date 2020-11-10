@@ -145,8 +145,7 @@ class _BottomBarItemViewState extends State<_BottomBarItemView>
     widget.barItem._animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
-    )
-      ..addStatusListener((AnimationStatus status) {
+    )..addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.completed) {
           if (!mounted) return;
           widget.removeAllSelect();
@@ -164,28 +163,26 @@ class _BottomBarItemViewState extends State<_BottomBarItemView>
     if (barItem.isSelected) {
       return barItem.selectedIcon == null
           ? Image.asset(
-        barItem.selectedIconPath,
-        width: barItem._size + 4,
-        height: barItem._size + 4,
-      )
+              barItem.selectedIconPath,
+              width: barItem._size + 4,
+              height: barItem._size + 4,
+            )
           : Icon(
-        barItem.selectedIcon,
-        size: barItem._size + 4,
-        color: Theme
-            .of(context)
-            .accentColor,
-      );
+              barItem.selectedIcon,
+              size: barItem._size + 4,
+              color: Theme.of(context).accentColor,
+            );
     }
     return barItem.icon == null
         ? Image.asset(
-      barItem.iconPath,
-      width: barItem._size,
-      height: barItem._size,
-    )
+            barItem.iconPath,
+            width: barItem._size,
+            height: barItem._size,
+          )
         : Icon(
-      barItem.icon,
-      size: barItem._size,
-    );
+            barItem.icon,
+            size: barItem._size,
+          );
   }
 
   @override

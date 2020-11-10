@@ -64,42 +64,36 @@ class IndexFragment extends StatelessWidget {
           selector: (_, model) => model.bangumiRows,
           shouldRebuild: (pre, next) => pre != next,
           builder: (_, bangumiRows, __) {
-            return CustomScrollView(
-              slivers: [
-                SliverPinnedToBoxAdapter(
-                  child: _buildHeader(
-                    context,
-                    backgroundColor,
-                    scaffoldBackgroundColor,
-                  ),
+            return ListView(
+              children: [
+                _buildHeader(
+                  context,
+                  backgroundColor,
+                  scaffoldBackgroundColor,
                 ),
-                SliverToBoxAdapter(child: _buildCarousels()),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                      top: 16.0,
-                      bottom: 8.0,
-                    ),
-                    child: Text(
-                      "OVA",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        height: 1.25,
-                      ),
+                _buildCarousels(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                    top: 16.0,
+                    bottom: 8.0,
+                  ),
+                  child: Text(
+                    "OVA",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      height: 1.25,
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: _buildOVAList(
-                    accentColor,
-                    primaryColor,
-                    backgroundColor,
-                    fileTagStyle,
-                    titleTagStyle,
-                  ),
+                _buildOVAList(
+                  accentColor,
+                  primaryColor,
+                  backgroundColor,
+                  fileTagStyle,
+                  titleTagStyle,
                 ),
                 ...List.generate(bangumiRows.length, (index) {
                   final BangumiRow bangumiRow = bangumiRows[index];
@@ -122,55 +116,51 @@ class IndexFragment extends StatelessWidget {
                     "共${bangumiRow.num}部"
                   ].join("，");
                   return [
-                    SliverToBoxAdapter(
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          top: 16.0,
-                          left: 16.0,
-                          right: 16.0,
-                          bottom: 8.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     offset: Offset(0, 4.0),
-                          //     blurRadius: 12.0,
-                          //     spreadRadius: -12.0,
-                          //     color: Colors.black26,
-                          //   )
-                          // ],
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                bangumiRow.name,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  height: 1.25,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                    Container(
+                      padding: EdgeInsets.only(
+                        top: 16.0,
+                        left: 16.0,
+                        right: 16.0,
+                        bottom: 8.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     offset: Offset(0, 4.0),
+                        //     blurRadius: 12.0,
+                        //     spreadRadius: -12.0,
+                        //     color: Colors.black26,
+                        //   )
+                        // ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              bangumiRow.name,
+                              style: TextStyle(
+                                fontSize: 20,
+                                height: 1.25,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Tooltip(
-                              message: full,
-                              child: Text(
-                                simple,
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      .color,
-                                  fontSize: 12.0,
-                                  height: 1.25,
-                                ),
+                          ),
+                          Tooltip(
+                            message: full,
+                            child: Text(
+                              simple,
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.bodyText1.color,
+                                fontSize: 12.0,
+                                height: 1.25,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     BangumiSliverGridFragment(
@@ -224,8 +214,7 @@ class IndexFragment extends StatelessWidget {
                       onTapStart: () => context
                           .read<IndexModel>()
                           .tapBangumiCarouselItemFlag = currFlag,
-                      onTapEnd: () =>
-                      context
+                      onTapEnd: () => context
                           .read<IndexModel>()
                           .tapBangumiCarouselItemFlag = null,
                       onTap: () {
@@ -242,9 +231,7 @@ class IndexFragment extends StatelessWidget {
                       margin: EdgeInsets.only(top: 16.0, bottom: 12.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                        color: Theme
-                            .of(context)
-                            .backgroundColor,
+                        color: Theme.of(context).backgroundColor,
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
@@ -277,9 +264,11 @@ class IndexFragment extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(final BuildContext context,
-      final Color backgroundColor,
-      final Color scaffoldBackgroundColor,) {
+  Widget _buildHeader(
+    final BuildContext context,
+    final Color backgroundColor,
+    final Color scaffoldBackgroundColor,
+  ) {
     return Selector<IndexModel, bool>(
       selector: (_, model) => model.hasScrolled,
       shouldRebuild: (pre, next) => pre != next,
@@ -295,19 +284,19 @@ class IndexFragment extends StatelessWidget {
             color: hasScrolled ? backgroundColor : scaffoldBackgroundColor,
             borderRadius: hasScrolled
                 ? BorderRadius.only(
-              bottomLeft: Radius.circular(16.0),
-              bottomRight: Radius.circular(16.0),
-            )
+                    bottomLeft: Radius.circular(16.0),
+                    bottomRight: Radius.circular(16.0),
+                  )
                 : null,
             boxShadow: hasScrolled
                 ? [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.024),
-                offset: Offset(0, 1),
-                blurRadius: 3.0,
-                spreadRadius: 3.0,
-              ),
-            ]
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.024),
+                      offset: Offset(0, 1),
+                      blurRadius: 3.0,
+                      spreadRadius: 3.0,
+                    ),
+                  ]
                 : null,
           ),
           duration: Duration(milliseconds: 240),
@@ -343,12 +332,12 @@ class IndexFragment extends StatelessWidget {
                         return season == null
                             ? Container()
                             : Text(
-                          season.title,
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
+                                season.title,
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
                       },
                     ),
                     MaterialButton(
@@ -360,9 +349,7 @@ class IndexFragment extends StatelessWidget {
                         size: 16.0,
                       ),
                       minWidth: 0,
-                      color: Theme
-                          .of(context)
-                          .backgroundColor,
+                      color: Theme.of(context).backgroundColor,
                       padding: EdgeInsets.all(6.0),
                       shape: CircleBorder(),
                     ),
@@ -390,29 +377,27 @@ class IndexFragment extends StatelessWidget {
               builder: (_, user, __) {
                 return user?.avatar?.isNotBlank == true
                     ? ClipOval(
-                  child: CachedNetworkImage(
-                    width: 36.0,
-                    height: 36.0,
-                    imageUrl: user?.avatar,
-                    placeholder: (_, __) =>
-                        Image.asset(
-                          "assets/mikan.png",
+                        child: CachedNetworkImage(
                           width: 36.0,
                           height: 36.0,
+                          imageUrl: user?.avatar,
+                          placeholder: (_, __) => Image.asset(
+                            "assets/mikan.png",
+                            width: 36.0,
+                            height: 36.0,
+                          ),
+                          errorWidget: (_, __, ___) => Image.asset(
+                            "assets/mikan.png",
+                            width: 36.0,
+                            height: 36.0,
+                          ),
                         ),
-                    errorWidget: (_, __, ___) =>
-                        Image.asset(
-                          "assets/mikan.png",
-                          width: 36.0,
-                          height: 36.0,
-                        ),
-                  ),
-                )
+                      )
                     : Image.asset(
-                  "assets/mikan.png",
-                  width: 36.0,
-                  height: 36.0,
-                );
+                        "assets/mikan.png",
+                        width: 36.0,
+                        height: 36.0,
+                      );
               },
             ),
             minWidth: 0,
@@ -430,9 +415,7 @@ class IndexFragment extends StatelessWidget {
       topRadius: Radius.circular(16.0),
       builder: (context, controller) {
         return Material(
-          color: Theme
-              .of(context)
-              .backgroundColor,
+          color: Theme.of(context).backgroundColor,
           child: SingleChildScrollView(
             controller: controller,
             child: Padding(
@@ -449,7 +432,7 @@ class IndexFragment extends StatelessWidget {
                   if (years.isNullOrEmpty) return Container();
                   final widgets = List.generate(
                     years.length,
-                        (index) {
+                    (index) {
                       final year = years[index];
                       return Row(
                         mainAxisSize: MainAxisSize.max,
@@ -465,7 +448,7 @@ class IndexFragment extends StatelessWidget {
                           SizedBox(width: 12.0),
                           ...List.generate(
                             4,
-                                (index) {
+                            (index) {
                               if (year.seasons.length > index) {
                                 return _buildSeasonItem(year.seasons[index]);
                               } else {
@@ -514,12 +497,8 @@ class IndexFragment extends StatelessWidget {
             shouldRebuild: (pre, next) => pre != next,
             builder: (context, selectedSeason, _) {
               final Color color = season.title == selectedSeason.title
-                  ? Theme
-                  .of(context)
-                  .primaryColor
-                  : Theme
-                  .of(context)
-                  .accentColor;
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).accentColor;
               return Tooltip(
                 message: season.title,
                 child: MaterialButton(
@@ -554,17 +533,19 @@ class IndexFragment extends StatelessWidget {
     );
   }
 
-  Widget _buildOVAList(final Color accentColor,
-      final Color primaryColor,
-      final Color backgroundColor,
-      final TextStyle fileTagStyle,
-      final TextStyle titleTagStyle,) {
+  Widget _buildOVAList(
+    final Color accentColor,
+    final Color primaryColor,
+    final Color backgroundColor,
+    final TextStyle fileTagStyle,
+    final TextStyle titleTagStyle,
+  ) {
     return Selector<IndexModel, List<RecordItem>>(
       selector: (_, model) => model.ovas,
       shouldRebuild: (pre, next) => pre != next,
       builder: (context, records, __) {
         final bool loading =
-        context.select<IndexModel, bool>((model) => model.ovaLoading);
+            context.select<IndexModel, bool>((model) => model.ovaLoading);
         if (loading) {
           return Container(
             height: 160.0,
@@ -608,15 +589,11 @@ class IndexFragment extends StatelessWidget {
                     transform: transform,
                     onTap: () {},
                     onTapStart: () {
-                      context
-                          .read<IndexModel>()
-                          .tapBangumiOVAItemFlag =
+                      context.read<IndexModel>().tapBangumiOVAItemFlag =
                           currFlag;
                     },
                     onTapEnd: () {
-                      context
-                          .read<IndexModel>()
-                          .tapBangumiOVAItemFlag = null;
+                      context.read<IndexModel>().tapBangumiOVAItemFlag = null;
                     },
                   );
                 },
